@@ -29,15 +29,18 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
+        failures = False
         for dest in settings.AES_KEYS.values():
             if os.path.exists(dest):
-                raise CommandError('Key file already exists at %s; remove it '
-                                   'first or specify a new path with --dest'
-                                   % dest)
+                failures = True
+                print 'Not overwriting file: %s' % dest
+                continue
 
-        for dest in settings.AES_KEYS.values():
             with open(dest, 'wb') as fp:
                 fp.write(generate_key(options['length']))
             os.chmod(dest, 0600)
             print 'Wrote new key: %s' % dest
 
+        if failures:
+            raise CommandError('At least one key file already exists, '
+                               'not overriding.')
