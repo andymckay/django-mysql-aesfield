@@ -6,6 +6,10 @@ and decryption in the database.
 
 See: https://dev.mysql.com/doc/refman/5.5/en/encryption-functions.html#function_aes-decrypt
 
+Credit:
+
+* Kumar McMillan did a lot of this work.
+
 Usage
 -----
 
