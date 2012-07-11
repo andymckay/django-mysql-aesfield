@@ -1,5 +1,4 @@
 import os
-import base64
 from optparse import make_option
 
 from django.conf import settings
@@ -14,10 +13,7 @@ def generate_key(byte_length):
     if byte_length < 32:
         raise ValueError('um, %s is probably not long enough for cryptography'
                          % byte_length)
-    key = os.urandom(byte_length)
-    key = base64.b64encode(key).rstrip('=')
-    key = key[0:byte_length]
-    return key
+    return os.urandom(byte_length).encode('hex')
 
 
 class Command(BaseCommand):
