@@ -1,4 +1,20 @@
+import os
 import tempfile
+
+from django.conf import settings
+
+minimal = {
+    'DATABASES': {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'mydatabase'
+        }
+    },
+    'AES_KEYS': {'foo': os.path.join(os.path.dirname(__file__), 'sample.key')}
+}
+
+if not settings.configured:
+    settings.configure(**minimal)
 
 from django.db import models
 from django.test import TestCase
